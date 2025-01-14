@@ -28,7 +28,7 @@ public class Reserve implements Serializable{
     private Long id;
 
     @NotNull
-    private LocalDateTime createdAt;
+    private LocalDateTime reserveDate;
     
     @NotNull
     @DecimalMin("6")
