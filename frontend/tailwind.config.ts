@@ -8,7 +8,17 @@ export default {
   ],
   theme: {
     extend: {
-      
+      colors: {
+        'red-500': '#AD343E',
+        'gray-100': '#474747',
+        'gray-200': '#5A5A5A',
+        'gray-300': '#DBDFD0',
+        'white-100': '#F9F9F7',
+        
+      },
+      maxWidth: {
+        container: "77.5rem",
+      },
     },
   },
   plugins: [],
