@@ -19,6 +19,10 @@ export default {
       maxWidth: {
         container: "77.5rem",
       },
+
+      backgroundImage: {
+        bannerImg: "url('/frutas.svg')",
+      },
     },
   },
   plugins: [],
