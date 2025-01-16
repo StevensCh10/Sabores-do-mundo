@@ -1,39 +1,54 @@
 package com.saboresdomundo.backend.service;
 
 import org.springframework.stereotype.Service;
-
 import com.saboresdomundo.backend.model.Reserve;
 import com.saboresdomundo.backend.repository.ReserveRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ReserveService {
     private final ReserveRepository reserveRepo;
 
     public Reserve findReserveById(Long id){
-        return reserveRepo.findById(id).orElseThrow(() -> new RuntimeException());
+        log.info("[findReserveById]: Iniciando busca por reserva");
+        var foundReserve = reserveRepo.findById(id).orElseThrow(() -> {
+            log.warn("[findReserveById]: Falha na busca. Reserva com ID: {} não encontrada no sistema", id);
+            return new RuntimeException();
+        });
+        log.info("[findReserveById]: Busca finalizada com sucesso");
+        return foundReserve;
     }
 
     public Reserve createReserve(Reserve newReserve){
+        log.info("[createReserve]: Iniciando cadastro da reserva");
         Reserve foundReserveByReservantName = reserveRepo.findByReserveByReservantName(newReserve.getReservantName());
         Reserve foundReserveByReservantPhone = reserveRepo.findByReserveByReservantPhone(newReserve.getReservantPhone());
         if(foundReserveByReservantName == null && foundReserveByReservantPhone == null){
+            log.info("[createReserve]: Cadastro finalizado com sucesso");
             return reserveRepo.save(newReserve);
         }
+        log.warn("[createReserve]: Falha no cadastro da reserva");
         throw new RuntimeException("Erro ao criar reserva");
     }
 
     public Reserve alterNumberReservant(Reserve reserve, String newNumber){
+        log.info("[alterNumberReservant]: Iniciando alteração do telefone do reservante");
         Reserve foundReserveByReservantPhone = reserveRepo.findByReserveByReservantPhone(newNumber);
         if(foundReserveByReservantPhone == null){
             reserve.setReservantPhone(newNumber);
+            log.info("[alterNumberReservant]: Alteração concluída com sucesso");
             return reserveRepo.save(reserve);
         }
+        log.warn("[alterNumberReservant]: Falha na alteração do telefone do reservante");
         throw new RuntimeException();
     }
 
     public void excludeReserve(Long id){
+        log.info("[excludeReserve]: Iniciando remoção de reserva");
         reserveRepo.deleteById(id);
+        log.info("[excludeReserve]: Remoção finalizada com sucesso");
     }
 }
