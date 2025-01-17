@@ -1,6 +1,3 @@
-import Image from "next/image";
-import { GridContainer } from "../GridContainer";
-
 export function SectionHero() {
   return (
     <section className="bg-bannerImg bg-cover bg-bottom">
