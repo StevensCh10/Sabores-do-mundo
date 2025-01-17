@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { GridContainer } from "../GridContainer";
 import Image from "next/image";
 
@@ -53,9 +54,9 @@ export function Footer() {
           <div className="flex flex-col items-start space-y-4">
             <div className="flex items-center space-x-2">
               <p className="text-white font-semibold">Nos siga no Instagram:</p>
-              <a href="/" className="text-blue-100 hover:underline">
+              <Link href="/" className="text-blue-100 hover:underline">
                 @saboresdomundorestaurante
-              </a>
+              </Link>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <Image src="food1.svg" width={194} height={170} alt="Comidas" />
