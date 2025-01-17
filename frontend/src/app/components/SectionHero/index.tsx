@@ -2,7 +2,7 @@ export function SectionHero() {
   return (
     <section className="bg-bannerImg bg-cover bg-bottom">
       <div className="flex flex-col items-center justify-center text-center py-20">
-        <h1 className="text-6xl italic mb-4">
+        <h1 className="text-6xl font-serif italic mb-4">
           A melhor <br /> comida para <br /> seu gosto
         </h1>
 
