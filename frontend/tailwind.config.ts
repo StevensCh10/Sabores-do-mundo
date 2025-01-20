@@ -23,6 +23,7 @@ export default {
 
       backgroundImage: {
         bannerImg: "url('/frutas.svg')",
+        bannerAbout: "url('/bg-about.svg')",
       },
     },
   },

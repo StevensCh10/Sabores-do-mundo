@@ -74,13 +74,13 @@ export function Header() {
               Reservas
             </Link>
             <Link
-              href="/"
+              href="/about"
               className="hover:bg-gray-300 hover:rounded-full px-3 py-2 transition duration-300"
             >
               Sobre nós
             </Link>
             <Link
-              href="/"
+              href="/about"
               className="hover:bg-gray-300 hover:rounded-full px-3 py-2 transition duration-300"
             >
               Contato

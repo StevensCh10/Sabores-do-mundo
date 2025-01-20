@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { GridContainer } from "../GridContainer";
 import { FiPhone, FiMail, FiMapPin } from "react-icons/fi";
+import Link from "next/link";
 
 export function SectionAbout() {
   return (
@@ -37,9 +38,11 @@ export function SectionAbout() {
                 cada visita especial e inesquecível.
               </small>
 
-              <button className="border-2 border-black font-bold px-6 py-4 rounded-full transform transition duration-300 hover:scale-110 self-start">
-                Sobre nós
-              </button>
+              <Link href="/about">
+                <button className="border-2 border-black font-bold px-6 py-4 rounded-full transform transition duration-300 hover:scale-110 self-start">
+                  Sobre nós
+                </button>
+              </Link>
             </div>
           </div>
 
