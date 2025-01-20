@@ -21,13 +21,12 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private long id;
-
+    private long number;
+    
     @NotNull
-    private LocalDateTime orderDate;
+    private LocalDateTime date;
 
-    @NotNull
     private BigDecimal totalPrice;
 
-    private String status;
+    private boolean finished;
 }

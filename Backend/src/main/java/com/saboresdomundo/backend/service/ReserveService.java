@@ -12,13 +12,13 @@ import lombok.extern.slf4j.Slf4j;
 public class ReserveService {
     private final ReserveRepository reserveRepo;
 
-    public Reserve findReserveById(Long id){
-        log.info("[findReserveById]: Iniciando busca por reserva");
+    public Reserve getReserveById(Long id){
+        log.info("[getReserveById]: Iniciando busca por reserva");
         var foundReserve = reserveRepo.findById(id).orElseThrow(() -> {
-            log.warn("[findReserveById]: Falha na busca. Reserva com ID: {} não encontrada no sistema", id);
+            log.warn("[getReserveById]: Falha na busca. Reserva com ID: {} não encontrada no sistema", id);
             return new RuntimeException();
         });
-        log.info("[findReserveById]: Busca finalizada com sucesso");
+        log.info("[getReserveById]: Busca finalizada com sucesso");
         return foundReserve;
     }
 
@@ -27,8 +27,9 @@ public class ReserveService {
         Reserve foundReserveByReservantName = reserveRepo.findByReserveByReservantName(newReserve.getReservantName());
         Reserve foundReserveByReservantPhone = reserveRepo.findByReserveByReservantPhone(newReserve.getReservantPhone());
         if(foundReserveByReservantName == null && foundReserveByReservantPhone == null){
+            var registeredOrder = reserveRepo.save(newReserve);
             log.info("[createReserve]: Cadastro finalizado com sucesso");
-            return reserveRepo.save(newReserve);
+            return registeredOrder;
         }
         log.warn("[createReserve]: Falha no cadastro da reserva");
         throw new RuntimeException("Erro ao criar reserva");
@@ -39,8 +40,9 @@ public class ReserveService {
         Reserve foundReserveByReservantPhone = reserveRepo.findByReserveByReservantPhone(newNumber);
         if(foundReserveByReservantPhone == null){
             reserve.setReservantPhone(newNumber);
+            var updatedOrder = reserveRepo.save(reserve);
             log.info("[alterNumberReservant]: Alteração concluída com sucesso");
-            return reserveRepo.save(reserve);
+            return updatedOrder;
         }
         log.warn("[alterNumberReservant]: Falha na alteração do telefone do reservante");
         throw new RuntimeException();
