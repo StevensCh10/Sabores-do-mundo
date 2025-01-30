@@ -26,4 +26,10 @@ public class OrderItemService {
         log.info("[allOrderItemsFromOrder]: Busca finalizada com sucesso");
         return orderItems;
     }
+
+    public void deleteOrderItem(Long id){
+        log.info("[deleteOrderItem]: Iniciando remoção do item do pedido");
+        orderItemRepo.deleteById(id);
+        log.info("[deleteOrderItem]: Remoção do item do pedido finalizada com sucesso");
+    }
 }
