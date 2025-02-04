@@ -1,5 +1,7 @@
 package com.saboresdomundo.backend.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import com.saboresdomundo.backend.model.Reserve;
 import com.saboresdomundo.backend.repository.ReserveRepository;
@@ -46,6 +48,13 @@ public class ReserveService {
         }
         log.warn("[alterNumberReservant]: Falha na alteração do telefone do reservante");
         throw new RuntimeException();
+    }
+
+    public List<Reserve> allReserves(){
+        log.info("[allReserves]: Iniciando busca por todas as reservas do sistema");
+        var reserves = reserveRepo.findAll();
+        log.info("[allReserves]: Busca finalizada com sucesso");
+        return reserves;
     }
 
     public void excludeReserve(Long id){

@@ -22,10 +22,8 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.PropertyBindingException;
-import com.saboresdomundo.backend.exception.EmailNotFound;
 import com.saboresdomundo.backend.exception.EntityAlreadyExists;
 import com.saboresdomundo.backend.exception.EntityNotFound;
-import com.saboresdomundo.backend.exception.InvalidPassword;
 import com.saboresdomundo.backend.exception.PropertyNotExist;
 
 @ControllerAdvice
@@ -39,18 +37,6 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
 	
 	@ExceptionHandler(EntityNotFound.class)
 	public ResponseEntity<?> handleEntityNotFound(EntityNotFound e, WebRequest request){
-		Problem problem = handleProblem(STTS_BAD_REQUEST, ProblemType.RESOURCE_NOT_FOUND, e.getMessage());
-		return handleExceptionInternal(e, problem, new HttpHeaders(), STTS_BAD_REQUEST, request);
-	}
-	
-	@ExceptionHandler(EmailNotFound.class)
-	public ResponseEntity<?> handleEmailNotFound(EmailNotFound e, WebRequest request){
-		Problem problem = handleProblem(STTS_BAD_REQUEST, ProblemType.RESOURCE_NOT_FOUND, e.getMessage());
-		return handleExceptionInternal(e, problem, new HttpHeaders(), STTS_BAD_REQUEST, request);
-	}
-
-	@ExceptionHandler(InvalidPassword.class)
-	public ResponseEntity<?> handleInvalidPassword(InvalidPassword e, WebRequest request){
 		Problem problem = handleProblem(STTS_BAD_REQUEST, ProblemType.RESOURCE_NOT_FOUND, e.getMessage());
 		return handleExceptionInternal(e, problem, new HttpHeaders(), STTS_BAD_REQUEST, request);
 	}
