@@ -29,9 +29,7 @@ public class ReserveService {
 
     public ReserveDTO createReserve(Reserve newReserve){
         log.info("[createReserve]: Iniciando cadastro da reserva");
-        Reserve foundReserveByReservantName = reserveRepo.findByReserveByReservantName(newReserve.getReservantName());
-        Reserve foundReserveByReservantPhone = reserveRepo.findByReserveByReservantPhone(newReserve.getReservantPhone());
-        if(foundReserveByReservantName == null && foundReserveByReservantPhone == null){
+        if(reserveRepo.existsReserveByReservantNameOrPhone(newReserve.getReservantName(), newReserve.getReservantPhone())){
             var registeredOrder = reserveRepo.save(newReserve);
             log.info("[createReserve]: Cadastro finalizado com sucesso");
             return returnDTO(registeredOrder);
@@ -42,7 +40,7 @@ public class ReserveService {
 
     public ReserveDTO alterNumberReservant(Reserve reserve, String newNumber){
         log.info("[alterNumberReservant]: Iniciando alteração do telefone do reservante");
-        Reserve foundReserveByReservantPhone = reserveRepo.findByReserveByReservantPhone(newNumber);
+        Reserve foundReserveByReservantPhone = reserveRepo.findByReservantPhone(newNumber);
         if(foundReserveByReservantPhone == null){
             reserve.setReservantPhone(newNumber);
             var updatedOrder = reserveRepo.save(reserve);
