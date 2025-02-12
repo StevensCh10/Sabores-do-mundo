@@ -2,10 +2,11 @@ package com.saboresdomundo.backend.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.springframework.stereotype.Service;
-
 import com.saboresdomundo.backend.dto.ReserveDTO;
+import com.saboresdomundo.backend.exception.CannotBeReserve;
+import com.saboresdomundo.backend.exception.CannotBeUpdated;
+import com.saboresdomundo.backend.exception.EntityNotFound;
 import com.saboresdomundo.backend.model.Reserve;
 import com.saboresdomundo.backend.repository.ReserveRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,7 @@ public class ReserveService {
         log.info("[getReserveById]: Iniciando busca por reserva");
         var foundReserve = reserveRepo.findById(id).orElseThrow(() -> {
             log.warn("[getReserveById]: Falha na busca. Reserva com ID: {} não encontrada no sistema", id);
-            return new RuntimeException();
+            return new EntityNotFound("Reserva não foi encontrada");
         });
         log.info("[getReserveById]: Busca finalizada com sucesso");
         return returnDTO(foundReserve);
@@ -35,7 +36,7 @@ public class ReserveService {
             return returnDTO(registeredOrder);
         }
         log.warn("[createReserve]: Falha no cadastro da reserva");
-        throw new RuntimeException("Erro ao criar reserva");
+        throw new CannotBeReserve("Erro ao criar reserva. Seu nome ou número já está vinculado à uma Reserva!"); //Problemas no historico das reservas
     }
 
     public ReserveDTO alterNumberReservant(Reserve reserve, String newNumber){
@@ -48,7 +49,7 @@ public class ReserveService {
             return returnDTO(updatedOrder);
         }
         log.warn("[alterNumberReservant]: Falha na alteração do telefone do reservante");
-        throw new RuntimeException();
+        throw new CannotBeUpdated("Esse número já está vinculado à uma reserva"); //Ver aqui tbm
     }
 
     public List<ReserveDTO> allReserves(){
