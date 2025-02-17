@@ -49,7 +49,7 @@ public class ReserveServiceTest {
         log.info("Iniciando ShouldInsertReserve");
         reserve.setId(null);
         
-        when(repository.existsReserveByReservantNameOrPhone(reserve.getReservantName(), reserve.getReservantPhone())).thenReturn(true);
+        when(repository.existsReserveByReservantNameOrPhone(reserve.getReservantName(), reserve.getReservantPhone())).thenReturn(0);
         when(repository.save(reserve)).thenReturn(reserve);
 
         ReserveDTO newReserve = service.createReserve(reserve);

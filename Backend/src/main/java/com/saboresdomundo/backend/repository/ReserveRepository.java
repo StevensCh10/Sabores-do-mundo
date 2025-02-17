@@ -11,16 +11,11 @@ public interface ReserveRepository extends JpaRepository<Reserve, Long>{
 
     @Query(
         value = """
-                SELECT
-                    CASE
-                        WHEN EXISTS (
-                            SELECT 1 FROM reserve WHERE reservant_phone = :phone OR reservant_name = :name
-                        )
-                        THEN 1
-                        ELSE 0
-                    END AS encontrado
+                SELECT EXISTS (
+                    SELECT 1 FROM reserve WHERE reservant_phone = :phone OR reservant_name = :name
+                )            
                 """,
         nativeQuery = true
     )
-    Boolean existsReserveByReservantNameOrPhone(@Param("name")String name, @Param("phone") String phone);
+    Integer existsReserveByReservantNameOrPhone(@Param("name")String name, @Param("phone") String phone);
 }

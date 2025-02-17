@@ -30,7 +30,7 @@ public class ReserveService {
 
     public ReserveDTO createReserve(Reserve newReserve){
         log.info("[createReserve]: Iniciando cadastro da reserva");
-        if(reserveRepo.existsReserveByReservantNameOrPhone(newReserve.getReservantName(), newReserve.getReservantPhone())){
+        if(reserveRepo.existsReserveByReservantNameOrPhone(newReserve.getReservantName(), newReserve.getReservantPhone()) == 0){
             var registeredOrder = reserveRepo.save(newReserve);
             log.info("[createReserve]: Cadastro finalizado com sucesso");
             return returnDTO(registeredOrder);

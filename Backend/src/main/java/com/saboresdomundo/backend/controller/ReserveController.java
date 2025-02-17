@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.saboresdomundo.backend.dto.ReserveDTO;
@@ -26,13 +28,13 @@ public class ReserveController {
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.OK)
-    public ReserveDTO createReserve(Reserve newReserve){
+    public ReserveDTO createReserve(@RequestBody Reserve newReserve){
         log.info("Iniciando endpoint da criação de reserva");
         return reserveService.createReserve(newReserve);
     }
 
     @PutMapping
-    public ReserveDTO alterNumberReservant(Reserve reserve, String number){
+    public ReserveDTO alterNumberReservant(@RequestBody Reserve reserve, @RequestBody String number){
         log.info("Iniciando endpoint da alteração de numero do reservante");
         return reserveService.alterNumberReservant(reserve, number);
     }
@@ -45,7 +47,7 @@ public class ReserveController {
 
     @DeleteMapping
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void deleteReserve(Long id){
+    public void deleteReserve(@RequestParam Long id){
         log.info("Iniciando endpoint da remoção de uma reserva");
         reserveService.excludeReserve(id);
     }
