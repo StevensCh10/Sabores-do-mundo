@@ -22,6 +22,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.PropertyBindingException;
+import com.saboresdomundo.backend.exception.CannotBeReserve;
 import com.saboresdomundo.backend.exception.EntityAlreadyExists;
 import com.saboresdomundo.backend.exception.EntityNotFound;
 import com.saboresdomundo.backend.exception.PropertyNotExist;
@@ -37,6 +38,12 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
 	
 	@ExceptionHandler(EntityNotFound.class)
 	public ResponseEntity<?> handleEntityNotFound(EntityNotFound e, WebRequest request){
+		Problem problem = handleProblem(STTS_BAD_REQUEST, ProblemType.RESOURCE_NOT_FOUND, e.getMessage());
+		return handleExceptionInternal(e, problem, new HttpHeaders(), STTS_BAD_REQUEST, request);
+	}
+
+	@ExceptionHandler(CannotBeReserve.class)
+	public ResponseEntity<?> handleCannotBeReserve(CannotBeReserve e, WebRequest request){
 		Problem problem = handleProblem(STTS_BAD_REQUEST, ProblemType.RESOURCE_NOT_FOUND, e.getMessage());
 		return handleExceptionInternal(e, problem, new HttpHeaders(), STTS_BAD_REQUEST, request);
 	}

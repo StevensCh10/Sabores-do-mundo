@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import com.saboresdomundo.backend.dto.ReserveDTO;
+import com.saboresdomundo.backend.enums.Status;
 import com.saboresdomundo.backend.exception.CannotBeReserve;
 import com.saboresdomundo.backend.exception.CannotBeUpdated;
 import com.saboresdomundo.backend.exception.EntityNotFound;
@@ -30,13 +31,15 @@ public class ReserveService {
 
     public ReserveDTO createReserve(Reserve newReserve){
         log.info("[createReserve]: Iniciando cadastro da reserva");
-        if(reserveRepo.existsReserveByReservantNameOrPhone(newReserve.getReservantName(), newReserve.getReservantPhone()) == 0){
+        var existsReserve = reserveRepo.existsReserveByReservantNameOrPhone(newReserve.getReservantName(), newReserve.getReservantPhone());
+        if(existsReserve == null){
+            newReserve.setStatus(Status.ATIVA.toString());
             var registeredOrder = reserveRepo.save(newReserve);
             log.info("[createReserve]: Cadastro finalizado com sucesso");
             return returnDTO(registeredOrder);
         }
         log.warn("[createReserve]: Falha no cadastro da reserva");
-        throw new CannotBeReserve("Erro ao criar reserva. Seu nome ou número já está vinculado à uma Reserva!"); //Problemas no historico das reservas
+        throw new CannotBeReserve("Erro ao criar reserva. Seu nome ou número já está vinculado à uma Reserva!");
     }
 
     public ReserveDTO alterNumberReservant(Reserve reserve, String newNumber){
@@ -49,7 +52,7 @@ public class ReserveService {
             return returnDTO(updatedOrder);
         }
         log.warn("[alterNumberReservant]: Falha na alteração do telefone do reservante");
-        throw new CannotBeUpdated("Esse número já está vinculado à uma reserva"); //Ver aqui tbm
+        throw new CannotBeUpdated("Esse número já está vinculado à uma reserva");
     }
 
     public List<ReserveDTO> allReserves(){

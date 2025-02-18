@@ -36,5 +36,6 @@ public class Reserve implements Serializable{
     private int amountOfPeople;
 
     @NotBlank
-    private String reservantPhone, reservantName;
+    private String reservantPhone, reservantName, status;
+
 }

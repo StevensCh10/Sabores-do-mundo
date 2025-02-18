@@ -11,11 +11,9 @@ public interface ReserveRepository extends JpaRepository<Reserve, Long>{
 
     @Query(
         value = """
-                SELECT EXISTS (
-                    SELECT 1 FROM reserve WHERE reservant_phone = :phone OR reservant_name = :name
-                )            
+                SELECT 1 FROM reserve WHERE (reservant_phone = :phone OR reservant_name = :name) AND status = 'ATIVA'
                 """,
         nativeQuery = true
     )
-    Integer existsReserveByReservantNameOrPhone(@Param("name")String name, @Param("phone") String phone);
+    Reserve existsReserveByReservantNameOrPhone(@Param("name")String name, @Param("phone") String phone);
 }
